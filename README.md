@@ -22,14 +22,14 @@ Download the latest release for your platform from [Releases](https://github.com
 ## Available Commands
 
     add         Add file contents to the index
-    checkout    Switch branches or restore working tree files
+    checkout    Switch branches or restore working tree files [Defaults: --force=false]
     clone       Clone a repository into a new directory
     commit      Record changes to the repository
     completion  Generate the autocompletion script for the specified shell
     help        Help about any command
     pull        Pulls changes from the remote repository
     push        Push changes to the remote repository
-    reset       Reset current HEAD to the specified state
+    reset       Reset current HEAD to the specified state [Defaults: --hard=false]
     restore     Restore working tree files
     status      Show the working tree status
     version     Show the version of gitcli
