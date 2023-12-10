@@ -5,7 +5,7 @@
 
 This is a simple command line interface for git. It is written in Go and uses the native [go-git](https://github.com/go-git/go-git) library. So there is no dependency on the `git` binary. The CLI is built with [Cobra](https://github.com/spf13/cobra-cli).
 
-`gitcli` is fully compatible with git hooks and abke to run them. Like it is also able to run git commands in a specific directory `-C`.
+`gitcli` is fully compatible with git hooks and able to run them. Like `git` is also able to run git commands in a specific directory `-C`.
 
 ## Intention
 
@@ -19,7 +19,7 @@ Download the latest release for your platform from [Releases](https://github.com
 
     gitcli [command]
 
-## Available Commands
+## Commands
 
     add         Add file contents to the index
     checkout    Switch branches or restore working tree files [Defaults: --force=false]
