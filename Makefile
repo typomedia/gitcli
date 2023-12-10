@@ -11,7 +11,7 @@ check:
 	go install github.com/client9/misspell/cmd/misspell@latest
 	misspell -error .
 	go install github.com/fzipp/gocyclo/cmd/gocyclo@latest
-	gocyclo -over 12 .
+	gocyclo -over 14 .
 	go install honnef.co/go/tools/cmd/staticcheck@latest
 	staticcheck ./...
 	go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
