@@ -23,16 +23,36 @@ func Checkout(cmd *cobra.Command, args []string) {
 
 	Hook(dir, name, "pre")
 
+	// Retrieve the HEAD reference
+	head, err := repo.Head()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	// Get the worktree
 	worktree, err := repo.Worktree()
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	err = repo.Fetch(&git.FetchOptions{})
+	if err != nil {
+		//log.Fatal(err)
+	}
+
+	hash := head.Hash()
+	ref := plumbing.NewHashReference(plumbing.ReferenceName(branch), hash)
+
+	err = repo.Storer.RemoveReference(ref.Name())
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	// Checkout the desired branch
 	err = worktree.Checkout(&git.CheckoutOptions{
-		Branch: plumbing.ReferenceName(fmt.Sprintf("refs/heads/%s", branch)),
-		Force:  force, // Use Force: true to discard local changes if needed
+		Branch: plumbing.ReferenceName(branch),
+		Create: true,
+		Force:  force,
 	})
 	if err != nil {
 		log.Fatal(err)
