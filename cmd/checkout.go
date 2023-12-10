@@ -16,5 +16,6 @@ var checkoutCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(checkoutCmd)
 	checkoutCmd.Flags().BoolP("help", "h", false, "Show help for command")
+	checkoutCmd.Flags().BoolP("force", "f", false, "Discard local changes")
 	checkoutCmd.Flags().StringP("path", "C", ".", "Run as if git was started in <path> instead of the current working directory.")
 }

@@ -13,6 +13,7 @@ func Checkout(cmd *cobra.Command, args []string) {
 	dir, _ := cmd.Flags().GetString("path")
 	branch := args[0]
 	name := helper.GetCurFuncName()
+	force, _ := cmd.Flags().GetBool("force")
 
 	// Open the repository
 	repo, err := git.PlainOpen(dir)
@@ -31,7 +32,7 @@ func Checkout(cmd *cobra.Command, args []string) {
 	// Checkout the desired branch
 	err = worktree.Checkout(&git.CheckoutOptions{
 		Branch: plumbing.ReferenceName(fmt.Sprintf("refs/heads/%s", branch)),
-		Force:  true, // Use Force: true to discard local changes if needed
+		Force:  force, // Use Force: true to discard local changes if needed
 	})
 	if err != nil {
 		log.Fatal(err)
