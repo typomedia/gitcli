@@ -45,5 +45,5 @@ func Reset(cmd *cobra.Command, args []string) {
 		log.Fatal(err)
 	}
 
-	fmt.Println("Changes stashed successfully.")
+	fmt.Println("Reset operation completed.")
 }
