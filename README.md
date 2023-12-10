@@ -21,6 +21,7 @@ Download the latest release for your platform from [Releases](https://github.com
 
 ## Available Commands
 
+    add         Add file contents to the index
     checkout    Switch branches or restore working tree files
     clone       Clone a repository into a new directory
     commit      Record changes to the repository
@@ -41,13 +42,29 @@ Download the latest release for your platform from [Releases](https://github.com
 
     gitcli clone https://github.com/typomedia/gitcli.git
     gitcli checkout main
-    gitcli checkout -C /path/to/repo main
-    gitcli pull -C /path/to/repo
-    gitcli push -C /path/to/repo
-    gitcli reset -C /path/to/repo --hard
-    gitcli commit -C /path/to/repo -m "Commit message"
-    gitcli restore -C /path/to/repo FILE/PATH
-    gitcli status -C /path/to/repo
+    gitcli pull
+    gitcli push
+    gitcli reset --hard
+    gitcli commit -m "Commit message"
+    gitcli restore FILE/PATH
+    gitcli status
+    gitcli add FILE1 FILE2/PATH
+
+
+Every command can be used with the `-C` flag to run it in a specific directory.
+
+    gitcli -C /path/to/repo status
+    gitcli -C /path/to/repo checkout main
+    gitcli -C /path/to/repo pull
+    gitcli -C /path/to/repo push
+    gitcli -C /path/to/repo reset --hard
+    gitcli -C /path/to/repo commit -m "Commit message"
+    gitcli -C /path/to/repo restore FILE/PATH
+    gitcli -C /path/to/repo add FILE1 FILE2/PATH
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 Copyright © 2023 Typomedia Foundation. All rights reserved.
