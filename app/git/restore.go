@@ -70,10 +70,16 @@ func Restore(cmd *cobra.Command, args []string) {
 			name := fmt.Sprintf("%s/%s", dir, file)
 
 			// Reset the file permissions
-			os.Chmod(name, os.FileMode(perm))
+			err = os.Chmod(name, os.FileMode(perm))
+			if err != nil {
+				log.Fatal(err)
+			}
 
 			// Write the file content to the working directory
-			os.WriteFile(name, []byte(content), os.FileMode(perm))
+			err = os.WriteFile(name, []byte(content), os.FileMode(perm))
+			if err != nil {
+				log.Fatal(err)
+			}
 
 			fmt.Printf("Restored: %s\n", file)
 		}

@@ -32,7 +32,7 @@ func Add(cmd *cobra.Command, args []string) {
 		// Add the file to the staging area
 		_, err = worktree.Add(file)
 		if err != nil {
-			log.Fatal("failed to stage changes: %s", err)
+			log.Fatalf("failed to stage changes: %s", err)
 		}
 	}
 
