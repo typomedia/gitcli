@@ -3,17 +3,27 @@ package git
 import (
 	"fmt"
 	"github.com/go-git/go-git/v5"
-	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/spf13/cobra"
+	"github.com/typomedia/gitcli/app/helper"
 	"log"
+	"os"
 )
 
 func Restore(cmd *cobra.Command, args []string) {
 	dir, _ := cmd.Flags().GetString("path")
-	file := args[0]
+	files := args[0:]
+	name := helper.GetCurFuncName()
 
 	// Open the repository
 	repo, err := git.PlainOpen(dir)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	Hook(dir, name, "pre")
+
+	// Retrieve the HEAD reference
+	head, err := repo.Head()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -30,19 +40,42 @@ func Restore(cmd *cobra.Command, args []string) {
 		log.Fatal(err)
 	}
 
-	if status.IsUntracked(file) {
-		log.Println("File is not tracked.")
-	}
+	for _, file := range files {
+		if status.IsUntracked(file) {
+			log.Println("File is not tracked.")
+		}
 
-	// Restore the file
-	if err := worktree.Checkout(&git.CheckoutOptions{
-		Hash:   plumbing.NewHash("HEAD^"),
-		Create: false,
-		Force:  true,
-		Keep:   false,
-	}); err != nil {
-		log.Fatal(err)
-	}
+		if status.File(file).Worktree == git.Modified {
 
-	fmt.Println("File restored successfully!")
+			// Restore the file to the state of the last commit
+			hash := head.Hash()
+			commit, err := repo.CommitObject(hash)
+			if err != nil {
+				log.Fatal("Commit:", err)
+			}
+
+			// Get the file content from the commit
+			filePath, err := commit.File(file)
+			if err != nil {
+				log.Fatal("Content:", err)
+			}
+
+			// Read the file content from the commit
+			content, err := filePath.Contents()
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			perm := filePath.Mode
+			name := fmt.Sprintf("%s/%s", dir, file)
+
+			// Reset the file permissions
+			os.Chmod(name, os.FileMode(perm))
+
+			// Write the file content to the working directory
+			os.WriteFile(name, []byte(content), os.FileMode(perm))
+
+			fmt.Printf("Restored: %s\n", file)
+		}
+	}
 }
