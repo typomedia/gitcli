@@ -29,8 +29,10 @@ Download the latest release for your platform from [Releases](https://github.com
     commit      Record changes to the repository
     completion  Generate the autocompletion script for the specified shell
     help        Help about any command
+    fetch       Download objects and refs from another repository
     pull        Pulls changes from the remote repository
     push        Push changes to the remote repository
+    remotes     List remote names
     reset       Reset current HEAD to the specified state [Defaults: --hard=false]
     restore     Restore working tree files
     status      Show the working tree status
