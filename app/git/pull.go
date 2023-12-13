@@ -39,5 +39,5 @@ func Pull(cmd *cobra.Command, args []string) {
 
 	Hook(dir, name, "post")
 
-	fmt.Println("Pull operation completed.")
+	fmt.Println("Already up to date.")
 }
