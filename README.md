@@ -3,6 +3,8 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/typomedia/gitcli)](https://goreportcard.com/report/github.com/typomedia/gitcli)
 [![Go Reference](https://pkg.go.dev/badge/github.com/typomedia/gitcli.svg)](https://pkg.go.dev/github.com/typomedia/gitcli)
 
+## Please do not use this project in production! It is still in development and may corrupt your repository.
+
 This is a simple command line interface for git. It is written in Go and uses the native [go-git](https://github.com/go-git/go-git) library. So there is no dependency on the `git` binary. The CLI is built with [Cobra](https://github.com/spf13/cobra-cli).
 
 `gitcli` is fully compatible with git hooks and able to run them. Like `git` is also able to run git commands in a specific directory `-C`.
