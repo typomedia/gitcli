@@ -2,7 +2,9 @@ package git
 
 import (
 	"fmt"
+	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/spf13/cobra"
+	"github.com/typomedia/gitcli/app/git/common"
 	"github.com/typomedia/gitcli/app/helper"
 	"log"
 
@@ -14,22 +16,22 @@ func Pull(cmd *cobra.Command, args []string) {
 	name := helper.GetCurFuncName()
 
 	// Open the repository
-	repo, err := git.PlainOpen(dir)
-	if err != nil {
-		log.Fatal(err)
-	}
+	repo := common.GetRepo(dir)
+	branch := common.GetBranch(repo)
 
 	Hook(dir, name, "pre")
 
 	// Get the worktree
-	worktree, err := repo.Worktree()
-	if err != nil {
-		log.Fatal(err)
-	}
+	worktree := common.GetWorktree(repo)
 
-	// Pull changes from the default remote branch (usually origin/master)
-	err = worktree.Pull(&git.PullOptions{
-		RemoteName: "origin",
+	// Get the remotes
+	remotes := common.GetRemotes(repo)
+	names := common.GetRemoteNames(remotes)
+
+	// Pull changes from the remote branch
+	err := worktree.Pull(&git.PullOptions{
+		RemoteName:    names[0],
+		ReferenceName: plumbing.ReferenceName("refs/heads/" + branch),
 	})
 	if err != nil && err != git.NoErrAlreadyUpToDate {
 		log.Fatal(err)
@@ -37,5 +39,5 @@ func Pull(cmd *cobra.Command, args []string) {
 
 	Hook(dir, name, "post")
 
-	fmt.Println("Pull operation completed.")
+	fmt.Println("Already up to date.")
 }
