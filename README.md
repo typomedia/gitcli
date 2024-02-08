@@ -15,7 +15,7 @@ This project offers a streamlined command-line interface for Git. It's meant to 
 
 ## Installation
 
-Download the latest release for your platform from [Releases](https://github.com/typomedia/gitti/releases/latest)
+Download the latest release for your platform from [Releases](https://github.com/typomedia/gitcli/releases/latest)
 
 ## Usage
 
